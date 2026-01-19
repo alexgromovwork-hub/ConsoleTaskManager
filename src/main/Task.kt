@@ -1,15 +1,11 @@
 package main
 
-class Task(val id: Int, var title: String, var status: TaskStatus) {
-    fun start(){
-        TODO()
+class Task(var title: String, var status: TaskStatus = TaskStatus.TODO) {
+    fun start() {
+        this.status = TaskStatus.IN_PROGRESS
     }
 
-    fun complete(){
-        TODO()
-    }
-
-    fun reopen(){
-        TODO()
+    fun complete() {
+        this.status = TaskStatus.DONE
     }
 }
