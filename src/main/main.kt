@@ -1,9 +1,10 @@
 package main
 
 fun main() {
-    val testUser = User(1, "Sasha", TaskManager1())
+    val testUser = User(1, "Sasha")
+    val taskList = TaskManager()
     val screen = IO()
-    screen.screen(testUser)
+    screen.screen(taskList)
 }
 
 

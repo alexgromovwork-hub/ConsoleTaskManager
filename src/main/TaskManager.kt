@@ -1,11 +1,11 @@
 package main
 
-class TaskManager1 {
+class TaskManager {
     private val tasks = mutableListOf<Task>()
 
-    fun addTask() {
+    fun addTask(content: String) {
         val task = Task("", TaskStatus.TODO)
-        task.title = readln()
+        task.title = content
         tasks.add(task)
     }
 
@@ -21,29 +21,17 @@ class TaskManager1 {
         return tasks.filter { it.status == TaskStatus.DONE }
     }
 
-    fun showAll(){
-        if (tasks.size == 0) {
-            println("YOU HAVE NO TASKS YET\n")
-        } else {
-        getAllTasks().forEach {
-            println("${tasks.indexOf(it)+1}. ${it.title} | ${it.status}")
-        }
-        println()}
-    }
-    fun showCompleted(){
-        if (tasks.size == 0) {
-            println("YOU HAVE NO TASKS YET\n")
-        }else{
-        getCompletedTasks().forEach {
-            println("${tasks.indexOf(it)+1}. ${it.title}")
-        }
-        println()}
-    }
-    fun start(taskId: Int) {
+
+
+    fun start(taskId: Int): Boolean {
+        if (taskId !in tasks.indices) return false
         tasks[taskId].start()
+        return true
     }
-    fun complete(taskId: Int) {
+    fun complete(taskId: Int): Boolean {
+        if (taskId !in tasks.indices) return false
         tasks[taskId].complete()
+        return true
     }
 
 }
