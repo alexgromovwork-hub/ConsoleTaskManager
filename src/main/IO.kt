@@ -14,16 +14,21 @@ class IO() {
                 "4" -> {
                     println("Select task")
                     val taskNum = readln()
-                    if (taskNum.toIntOrNull() == null || taskNum.toInt() !in tasks.getAllTasks().indices){
-                        println("There are no such task\n")
+                    if (!inputIntCheck(taskNum)){
+                        println("Wrong input. You need to enter a number of task\n")
                         continue
                     }
-
+                    val tNum = taskNum.toInt()-1
+                    if(!tasks.rangeCheck(tNum)){
+                        println("There is no such task")
+                        continue
+                    }
+                    println("You've chosen task: ${tasks.getAllTasks()[tNum].title}")
                     println("Select action:\n1. Change task status to \"IN PROGRESS\"\n2. Change task status to \"DONE\"\n3. Delete task")
                     when (readln()){
-                        "1" -> tasks.start(taskNum.toInt())
-                        "2" -> tasks.complete(taskNum.toInt())
-                        "3" -> tasks.removeTask(taskNum.toInt())
+                        "1" -> if(!tasks.start(taskNum.toInt())) println("Unable to start the task. There's no such task or it's already completed\n")
+                        "2" -> if(!tasks.complete(taskNum.toInt())) println("Unable to complete the task. There's no such task or it's already completed\n")
+                        "3" -> if(!tasks.removeTask(taskNum.toInt())) println("Unable to remove the task. There's no such task\n")
                         else -> continue
                     }
                 }
@@ -33,7 +38,7 @@ class IO() {
         }
     }
     fun showAll(tasks: TaskManager){
-        if (tasks.getAllTasks().size == 0) {
+        if (tasks.getAllTasks().isEmpty()) {
             println("YOU HAVE NO TASKS YET\n")
         } else {
             tasks.getAllTasks().forEachIndexed { index, task ->
@@ -43,7 +48,7 @@ class IO() {
     }
 
     fun showCompleted(tasks: TaskManager){
-        if (tasks.getAllTasks().size == 0) {
+        if (tasks.getAllTasks().isEmpty()) {
             println("YOU HAVE NO TASKS YET\n")
         }else{
             tasks.getCompletedTasks().forEachIndexed { index, task ->
@@ -55,5 +60,8 @@ class IO() {
         println("Enter your task:")
         val string = readln()
         tasks.addTask(string)
+    }
+    fun inputIntCheck(input: String): Boolean{
+        return input.toIntOrNull() != null
     }
 }
